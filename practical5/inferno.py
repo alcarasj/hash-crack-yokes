@@ -41,8 +41,11 @@ else:
 	secret = SecretSharer.recover_secret(shares)
 
 	decrypted = decrypt(level_ciphertext, secret.zfill(32).decode('hex'))
-	import pdb; pdb.set_trace()
-	decrypted = json.loads(decrypted)
+	try:
+		decrypted = json.loads(decrypted)
+		print("Level-up success! SECRET: %s" % secret)   
+	except:
+		print("Level-up failed. Crack moar hashes.")
 	decrypted["ciphertext"] = str(decrypted["ciphertext"])
 	decrypted["hashes"] = [str(s) for s in decrypted["hashes"]]
 	decrypted["shares"] = [str(s) for s in decrypted["shares"]]
