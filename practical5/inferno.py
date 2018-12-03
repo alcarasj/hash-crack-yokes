@@ -44,15 +44,15 @@ else:
 	try:
 		decrypted = json.loads(decrypted)
 		print("Level-up success! SECRET: %s" % secret)   
+		decrypted["ciphertext"] = str(decrypted["ciphertext"])
+		decrypted["hashes"] = [str(s) for s in decrypted["hashes"]]
+		decrypted["shares"] = [str(s) for s in decrypted["shares"]]
+		decrypted["easteregg"] = str(decrypted["easteregg"])
+		print("Next level's easter-egg: %s" % decrypted["easteregg"])
+		output_hashes = open(output_path + ".hashes", "w")
+		output_json = open(output_path + ".json", "w")
+		for h in decrypted["hashes"]:
+			output_hashes.write(h + "\n")
+		json.dump(decrypted, output_json)
 	except:
-		print("Level-up failed. Crack moar hashes.")
-	decrypted["ciphertext"] = str(decrypted["ciphertext"])
-	decrypted["hashes"] = [str(s) for s in decrypted["hashes"]]
-	decrypted["shares"] = [str(s) for s in decrypted["shares"]]
-	decrypted["easteregg"] = str(decrypted["easteregg"])
-
-	output_hashes = open(output_path + ".hashes", "w")
-	output_json = open(output_path + ".json", "w")
-	for h in decrypted["hashes"]:
-		output_hashes.write(h + "\n")
-	json.dump(decrypted, output_json)
+		print("Failed to level-up. Crack moar hashes.")
